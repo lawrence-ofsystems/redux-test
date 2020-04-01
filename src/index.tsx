@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import TaskList from "./components/TaskList";
+import {Provider} from "react-redux";
+import rootStore from "./reducers/rootReducer";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Provider store={rootStore}>
+          <TaskList />
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
