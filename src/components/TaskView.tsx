@@ -32,8 +32,8 @@ const TaskView = ({ task, updateTask, toggleTaskState }: Props) => {
                 { task.description }
             </span>&nbsp;
             <span>
-                { task.assignee
-                    ? <small>{ task.assignee.name }</small>
+                {task.assigneeUuid
+                    ? <small>{task.assigneeUuid}</small>
                     : 'unassigned'
                 }
             </span>

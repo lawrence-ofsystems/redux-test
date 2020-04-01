@@ -15,14 +15,15 @@ enum TaskActionEnum {
 }
 
 export type TaskAction =
-    | { type: TaskActionEnum.AddTask; description: string | null }
-    | { type: TaskActionEnum.UpdateTask; uuid: string; description: string | null }
-    | { type: TaskActionEnum.ToggleTaskState; uuid: string }
-    | { type: TaskActionEnum.RemoveCompletedTasks };
+    | { type: TaskActionEnum.AddTask; description: string | null; assigneeUuid: string | null; }
+    | { type: TaskActionEnum.UpdateTask; uuid: string; description: string | null; }
+    | { type: TaskActionEnum.ToggleTaskState; uuid: string; }
+    | { type: TaskActionEnum.RemoveCompletedTasks; };
 
-export const addTaskAction = (description: string | null): TaskAction => ({
+export const addTaskAction = (description: string | null, assigneeUuid: string | null): TaskAction => ({
     type: TaskActionEnum.AddTask,
-    description
+    description,
+    assigneeUuid
 } as const);
 export const updateTaskAction = (uuid: string, description: string | null): TaskAction => ({
     type: TaskActionEnum.UpdateTask,
@@ -40,7 +41,7 @@ function taskReducer(state: TaskState = defaultTaskState, action: TaskAction): T
         case TaskActionEnum.AddTask:
             return {
                 ...state,
-                tasks: appendTask(state.tasks, action.description)
+                tasks: appendTask(state.tasks, action.description, action.assigneeUuid)
             };
         case TaskActionEnum.UpdateTask:
             return {

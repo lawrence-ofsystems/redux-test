@@ -1,7 +1,8 @@
-export default class User {
-    readonly name: string;
+import Name from "./Name";
+import Login from "./Login";
 
-    constructor(name: string) {
-        this.name = name;
-    }
+export default interface User {
+    readonly name: Name;
+    readonly email: string;
+    readonly login: Login;
 }

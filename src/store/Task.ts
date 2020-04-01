@@ -1,16 +1,15 @@
-import User from "./User";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 export default class Task {
     readonly uuid: string;
     readonly description: string;
     readonly completed: boolean;
-    readonly assignee?: User;
+    readonly assigneeUuid: string | null;
 
-    constructor(description: string, completed: boolean = false, assignee?: User, uuid?: string) {
+    constructor(description: string, assigneeUuid: string | null, completed: boolean = false, uuid?: string) {
         this.uuid = uuid || uuidv4();
         this.description = description;
         this.completed = completed;
-        this.assignee = assignee;
+        this.assigneeUuid = assigneeUuid;
     }
 };
