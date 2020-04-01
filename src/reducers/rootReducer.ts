@@ -1,14 +1,13 @@
 import {combineReducers, createStore} from "redux";
-import taskReducer, {TaskState} from "./taskReducer";
+import taskReducer from "./taskReducer";
 
 export const rootReducer = combineReducers({
     taskStore: taskReducer
 });
 
-//export type RootState = ReturnType<typeof rootReducer>;
-export type RootState = TaskState;
+export type RootState = ReturnType<typeof rootReducer>;
 
-const rootStore = createStore(taskReducer);
+const rootStore = createStore(rootReducer);
 
 export default rootStore;
 

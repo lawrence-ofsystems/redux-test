@@ -20,7 +20,7 @@ interface OwnProps {
 type Props = StateProps & DispatchProps & OwnProps;
 
 const mapState = (state: RootState) => ({
-    tasks: state.tasks
+    tasks: state.taskStore.tasks
 });
 
 const mapDispatch : DispatchProps = {
