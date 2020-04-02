@@ -3,10 +3,10 @@ import TaskView from "./TaskView";
 import Task from "../store/Task";
 import {RootState} from "../reducers/rootReducer";
 import {connect} from "react-redux";
-import {addTaskAction, removeCompletedTasksAction} from "../reducers/taskReducer";
 import User from "../store/User";
-import {setUserAction} from "../reducers/userReducer";
 import {getUserUuid, randomMeToUser} from "../utils/userUtils";
+import {addTaskAction, removeCompletedTasksAction} from "../reducers/taskActions";
+import {setUserAction} from "../reducers/userActions";
 
 interface StateProps {
     tasks: Task[]

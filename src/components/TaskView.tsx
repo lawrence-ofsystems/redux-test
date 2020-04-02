@@ -1,8 +1,8 @@
 import React from "react";
 import Task from "../store/Task";
 import {RootState} from "../reducers/rootReducer";
-import {toggleTaskStateAction, updateTaskAction} from "../reducers/taskReducer";
 import {connect} from "react-redux";
+import {toggleTaskStateAction, updateTaskAction} from "../reducers/taskActions";
 
 interface DispatchProps {
     updateTask: (uuid: string, description: string | null) => void,
@@ -20,16 +20,16 @@ const mapDispatch: DispatchProps = {
     toggleTaskState: toggleTaskStateAction
 };
 
-const TaskView = ({ task, updateTask, toggleTaskState }: Props) => {
+const TaskView = ({task, updateTask, toggleTaskState}: Props) => {
     return (
-        <li onDoubleClick={ () => updateTask(task.uuid, prompt("Edit task description", task.description)) }>
+        <li onDoubleClick={() => updateTask(task.uuid, prompt("Edit task description", task.description))}>
             <input
                 type={'checkbox'}
-                checked={ task.completed }
-                onChange={ () => toggleTaskState(task.uuid) }
+                checked={task.completed}
+                onChange={() => toggleTaskState(task.uuid)}
             />
             <span>
-                { task.description }
+                {task.description}
             </span>&nbsp;
             <span>
                 {task.assigneeUuid
