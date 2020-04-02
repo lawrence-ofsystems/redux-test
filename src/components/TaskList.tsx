@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import TaskView from "./TaskView";
 import Task from "../store/Task";
 import {RootState} from "../reducers/rootReducer";
@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {addTaskAction, removeCompletedTasksAction} from "../reducers/taskReducer";
 import User from "../store/User";
 import {setUserAction} from "../reducers/userReducer";
-import {getUserUuid} from "../utils/userUtils";
+import {getUserUuid, randomMeToUser} from "../utils/userUtils";
 
 interface StateProps {
     tasks: Task[]
@@ -15,7 +15,7 @@ interface StateProps {
 
 interface DispatchProps {
     addTask: (description: string | null, assigneeUuid: string | null) => void,
-    removeCompletedTasks: () => void
+    removeCompletedTasks: () => void,
     setUser: (user: User) => void
 }
 
@@ -29,20 +29,30 @@ const mapState = (state: RootState) => ({
     user: state.userStore.user
 });
 
-const mapDispatch : DispatchProps = {
-    addTask: (description: string | null, assigneeUuid: string | null) => addTaskAction(description, assigneeUuid),
-    removeCompletedTasks: () => removeCompletedTasksAction(),
-    setUser: (user: User) => setUserAction(user)
+const mapDispatch: DispatchProps = {
+    addTask: addTaskAction,
+    removeCompletedTasks: removeCompletedTasksAction,
+    setUser: setUserAction
 };
 
-const TaskList = ({tasks, user, addTask, removeCompletedTasks}: Props) => {
+const TaskList = ({tasks, user, addTask, removeCompletedTasks, setUser}: Props) => {
     let incompleteTasks = tasks.filter((task) => !task.completed);
     let completedTasks = tasks.filter((task) => task.completed);
+    useEffect(() => {
+            fetch('https://randomuser.me/api/')
+                .then(res => res.json())
+                .then(response => setUser(randomMeToUser(response)))
+                .catch(error => console.log("Random user API failed: " + error));
+        },
+        [setUser]
+    );
     return (
         <div>
             <h1>Task Tracker</h1>
             <h2>{`Things to Do: ${incompleteTasks.length}`}</h2>
-            <button onClick={() => addTask(prompt("Enter new task name", "Take a break"), getUserUuid(user))}>
+            <button
+                onClick={() => addTask(prompt("Enter new task name", "Take a break"), getUserUuid(user))}
+                disabled={user === null}>
                 Add
             </button>
             <ul>
@@ -51,10 +61,16 @@ const TaskList = ({tasks, user, addTask, removeCompletedTasks}: Props) => {
                 }
             </ul>
             <h2>{`Done and Dusted: ${completedTasks.length}`}</h2>
-            <button onClick={removeCompletedTasks}>Clear</button>
-            {
-                completedTasks.map((task: Task) => <TaskView key={ task.uuid } task={ task }/>)
-            }
+            <button
+                onClick={removeCompletedTasks}
+                disabled={completedTasks.length === 0}>
+                Clear
+            </button>
+            <ul>
+                {
+                    completedTasks.map((task: Task) => <TaskView key={task.uuid} task={task}/>)
+                }
+            </ul>
         </div>
     );
 };

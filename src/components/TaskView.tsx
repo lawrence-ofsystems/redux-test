@@ -16,8 +16,8 @@ interface OwnProps {
 type Props = DispatchProps & OwnProps;
 
 const mapDispatch: DispatchProps = {
-    updateTask: (uuid: string, description: string | null) => updateTaskAction(uuid, description),
-    toggleTaskState: (uuid: string) => toggleTaskStateAction(uuid)
+    updateTask: updateTaskAction,
+    toggleTaskState: toggleTaskStateAction
 };
 
 const TaskView = ({ task, updateTask, toggleTaskState }: Props) => {

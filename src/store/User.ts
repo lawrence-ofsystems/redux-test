@@ -5,4 +5,5 @@ export default interface User {
     readonly name: Name;
     readonly email: string;
     readonly login: Login;
+    readonly picture: string;
 }
