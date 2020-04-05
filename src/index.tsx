@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import TaskList from "./components/TaskList";
 import {Provider} from "react-redux";
 import rootStore from "./reducers/rootReducer";
+import 'typeface-roboto';
 
 ReactDOM.render(
   <React.StrictMode>
