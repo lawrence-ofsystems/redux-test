@@ -7,6 +7,8 @@ import User from "../store/User";
 import {getUserUuid, randomMeToUser} from "../utils/userUtils";
 import {addTaskAction, removeCompletedTasksAction} from "../reducers/taskActions";
 import {setUserAction} from "../reducers/userActions";
+import Button from "@material-ui/core/Button";
+import FormGroup from "@material-ui/core/FormGroup";
 
 interface StateProps {
     tasks: Task[]
@@ -50,27 +52,27 @@ const TaskList = ({tasks, user, addTask, removeCompletedTasks, setUser}: Props) 
         <div>
             <h1>Task Tracker</h1>
             <h2>{`Things to Do: ${incompleteTasks.length}`}</h2>
-            <button
+            <Button
                 onClick={() => addTask(prompt("Enter new task name", "Take a break"), getUserUuid(user))}
                 disabled={user === null}>
                 Add
-            </button>
-            <ul>
+            </Button>
+            <FormGroup>
                 {
                     incompleteTasks.map((task: Task) => <TaskView key={task.uuid} task={task}/>)
                 }
-            </ul>
+            </FormGroup>
             <h2>{`Done and Dusted: ${completedTasks.length}`}</h2>
-            <button
+            <Button
                 onClick={removeCompletedTasks}
                 disabled={completedTasks.length === 0}>
                 Clear
-            </button>
-            <ul>
+            </Button>
+            <FormGroup>
                 {
                     completedTasks.map((task: Task) => <TaskView key={task.uuid} task={task}/>)
                 }
-            </ul>
+            </FormGroup>
         </div>
     );
 };
